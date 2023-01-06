@@ -1,4 +1,5 @@
-﻿using ETicketMvc.Models;
+﻿using ETicketMvc.Data.Enums;
+using ETicketMvc.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;

@@ -22,7 +22,7 @@ namespace ETicketMvc.Controllers
         {
             List<Cinema> data = await _context.Cinema.ToListAsync();
 
-            return View();
+            return View(data);
         }
     }
 }

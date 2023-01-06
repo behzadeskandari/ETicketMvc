@@ -1,4 +1,5 @@
 using ETicketMvc.Data;
+using ETicketMvc.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,11 @@ namespace ETicketMvc
         {
 
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            ///Services Configuration
+            services.AddScoped<IActorService, ActorService>();
+
+
 
             services.AddControllersWithViews();
         }
