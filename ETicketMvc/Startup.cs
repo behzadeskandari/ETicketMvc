@@ -31,7 +31,8 @@ namespace ETicketMvc
 
             ///Services Configuration
             services.AddScoped<IActorService, ActorService>();
-
+            services.AddScoped<IProducersService, ProducersService>();
+            services.AddScoped<ICinemaService, CinemaService>();
 
 
             services.AddControllersWithViews();
