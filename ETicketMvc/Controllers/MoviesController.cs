@@ -5,24 +5,34 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using ETicketMvc.Data.Services;
 
 namespace ETicketMvc.Controllers
 {
     public class MoviesController : Controller
     {
 
-        private readonly AppDbContext _context;
+        private readonly IMovieService _service;
 
-        public MoviesController(AppDbContext context)
+        public MoviesController(IMovieService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Movie> data = await _context.Movie.Include(n => n.Cinema).OrderBy(n => n.Name).ToListAsync();
+            var data = await _service.GetAllAsync(n => n.Cinema);
 
             return View(data);
         }
+
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var movieDetail = await _service.GetMoiveByIdAsync(id);
+
+            return View(movieDetail);
+        }
     }
+
 }

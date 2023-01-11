@@ -1,4 +1,5 @@
-﻿using ETicketMvc.Data.Enums;
+﻿using ETicketMvc.Data.Base;
+using ETicketMvc.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ETicketMvc.Models
 {
-    public class Movie
+    public class Movie: IEntityBase
     {
         [Key]
         public int Id { get; set; }
