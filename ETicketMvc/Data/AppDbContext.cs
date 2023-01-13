@@ -7,7 +7,7 @@ namespace ETicketMvc.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options) 
         {
-
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace ETicketMvc.Data
             modelBuilder.Entity<Actor_Movie>().HasOne(m => m.Actor).WithMany(am => am.Actor_Movies).HasForeignKey(m => m.ActorId);
 
 
-
+            
 
 
             base.OnModelCreating(modelBuilder);
@@ -35,6 +35,19 @@ namespace ETicketMvc.Data
         public DbSet<Actor_Movie> Actor_Movies { get; set; }
         public DbSet<Cinema> Cinema { get; set; }
         public DbSet<Producer> Producer { get; set; }
+        
+        /// <summary>
+        /// order related orders
+        /// </summary>
+        public DbSet<Order> Order { get; set; }
+
+        /// <summary>
+        /// order related orders
+        /// </summary>
+        public DbSet<OrderItem> OrderItem { get; set; }
+
+
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
     }
 }
