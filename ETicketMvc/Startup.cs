@@ -1,10 +1,13 @@
 using ETicketMvc.Data;
 using ETicketMvc.Data.Cart;
 using ETicketMvc.Data.Services;
+using ETicketMvc.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,11 +36,31 @@ namespace ETicketMvc
 
             ///Services Configuration
             services.AddScoped<IActorService, ActorService>();
+            
             services.AddScoped<IProducersService, ProducersService>();
+            
             services.AddScoped<ICinemaService, CinemaService>();
+            
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IOrderService, OrderService>();
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            //Authentication And Authorization 
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddMemoryCache();
+            
+            services.AddAuthentication();
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            });
 
             services.AddSession();
 
@@ -64,6 +87,9 @@ namespace ETicketMvc
             
             app.UseSession();
 
+
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -74,6 +100,7 @@ namespace ETicketMvc
             });
 
             AppDbInitializer.Seed(app);
+            AppDbInitializer.SeedUserAndRolesAsync(app).Wait();
 
         }
     }
